@@ -1,0 +1,44 @@
+{
+  "name": "redis",
+  "version": "1.0.0",
+  "description": "Redis demo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo Hello Redis",
+    "start": "supervisor server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuxiaoguang/Redis.git"
+  },
+  "keywords": [
+    "Redis",
+    "Node.js"
+  ],
+  "author": "yuxiaoguang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuxiaoguang/Redis/issues"
+  },
+  "homepage": "https://github.com/yuxiaoguang/Redis#readme",
+  "devDependencies": {
+    "body-parser": "^1.19.0",
+    "element-react": "^1.4.34",
+    "element-theme-default": "^1.4.13",
+    "express": "^4.17.1",
+    "ioredis": "^4.16.2",
+    "moment": "^2.24.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "0.9.5",
+    "spdy": "^4.0.2"
+  },
+  "dependencies": {
+    "supervisor": "^0.12.0",
+    "uuid": "^7.0.3",
+    "webpack": "^4.42.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1"
+  }
+}
