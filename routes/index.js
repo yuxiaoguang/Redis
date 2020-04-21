@@ -21,7 +21,7 @@ router.post('/setLock', (req, res) => {
         res.send({result});
         (async function(){
             if(result.status) {
-                console.log(`${source} ${owner} ${moment.utc().format('YYYY-MM-DD hh:mm:ss')} 10秒后释放该锁 `);
+                console.log(`${source} ${owner} ${moment.utc().format('YYYY-MM-DD HH:mm:ss')} 10秒后释放该锁 `);
                 await sleep(10000);
                 redisLock.remove(source, owner);
             }
