@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 const uuid = require('uuid');
+const moment = require('moment');
 const RedisLock = require('../RedisLock');
 const redisLock =  new RedisLock();
 
@@ -12,41 +13,35 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 
-
-router.post('/', (req, res) => {
+router.post('/setLock', (req, res) => {
     const owner = uuid.v1();
     const {source} = req.body;
-    const lockResult = redisLock.set(source, owner, 180);
+    const lockResult = redisLock.set(source, owner, 20);
     lockResult.then((result) => {
-        sleep(10000).then(() => {
-            const unlockResult = redisLock.remove(source, owner);
-        });
         res.send({result});
+        (async function(){
+            if(result.status) {
+                console.log(`${source} ${owner} ${moment.utc().format('YYYY-MM-DD hh:mm:ss')} 10秒后释放该锁 `);
+                await sleep(10000);
+                redisLock.remove(source, owner);
+            }
+
+        })()
     });
 });
 
-router.get('/', (req, res) => {
+router.post('/removeLock', (req, res) => {
+    const {source, owner} = req.body;
+    const unlockResult = redisLock.remove(source, owner);
+    unlockResult.then(result => res.send({result}));
+});
 
+
+router.get('/getLock', (req, res) => {
+    const {source} = req.body;
+    const lockResult = redisLock.get(source);
+    lockResult.then(result => res.send({result}));
 })
-
-router.get('/push', (req, res) => {
-    res.push('Test', {result: 'Hello World!'});
-    const stream = res.push('/public/main.js', {
-        status: 200,
-        method: 'GET',
-        request: {
-            accept: '*/*'
-        },
-        response: {
-            'content-type': 'application/javascript'
-        }
-    });
-    stream.on('error', function () {
-
-    });
-    stream.end('alert("hello from push stream");');
-    res.end('<script src="/public/main.js"></script>');
-});
 
 function sleep(timer, options) {
     return new Promise((resolve => {

@@ -8,11 +8,13 @@ const bodyParser = require('body-parser');
 let io = require('socket.io')(http2);
 
 const routes = require('./routes');
+const push = require('./routes/push');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname)));
 app.use('/', routes);
+app.use('/push', push);
 
 let options = {
     key: fs.readFileSync('./http2-node-server-push/server.key'),
