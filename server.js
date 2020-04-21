@@ -5,6 +5,7 @@ const http2 = require('spdy');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+let io = require('socket.io')(http2);
 
 const routes = require('./routes');
 
