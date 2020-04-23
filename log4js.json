@@ -1,0 +1,43 @@
+{
+    "appenders": {
+      "access": {
+        "type": "dateFile",
+        "filename": "../../logs/redis-access.log",
+        "pattern": "-yyyy-MM-dd",
+        "category": "http"
+      },
+      "app": {
+        "type": "file",
+        "filename": "../../logs/redis-app.log",
+        "maxLogSize": 51200000,
+        "backups": 20
+      },
+      "errorFile": {
+        "type": "file",
+        "filename": "../../logs/redis-errors.log",
+        "maxLogSize": 20480000,
+        "backups": 50
+      },
+      "errors": {
+        "type": "logLevelFilter",
+        "level": "ERROR",
+        "appender": "errorFile"
+      },
+      "perf": {
+        "type": "file",
+        "filename": "../../logs/redis-perf.log",
+        "maxLogSize": 10240000,
+        "backups": 100,
+        "layout": {
+          "type": "pattern",
+          "pattern": "%d %m"
+        },
+        "category": "perf"
+      }
+    },
+    "categories": {
+      "default": { "appenders": [ "app", "errors" ], "level": "DEBUG" },
+      "http": { "appenders": [ "access"], "level": "DEBUG" },
+      "perf": { "appenders": [ "perf"], "level": "DEBUG" }
+    }
+  }

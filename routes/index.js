@@ -6,6 +6,8 @@ const uuid = require('uuid');
 const moment = require('moment');
 const RedisLock = require('../RedisLock');
 const redisLock =  new RedisLock();
+const LoggerCollection = require('../LoggerCollection');
+const logger = new LoggerCollection(__dirname);
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -21,9 +23,17 @@ router.post('/setLock', (req, res) => {
         res.send({result});
         (async function(){
             if(result.status) {
-                console.log(`${source} ${owner} ${moment.utc().format('YYYY-MM-DD HH:mm:ss')} 10秒后释放该锁 `);
+                logger.info(`############ ${source} 加锁详情 Start #############`);
+                logger.info(result);
+                logger.info(`############ ${source} 加锁详情 End #############`);
+                logger.info(`${source} ${owner} ${moment.utc().format('YYYY-MM-DD HH:mm:ss')} 10秒后释放该锁 `);
                 await sleep(10000);
-                redisLock.remove(source, owner);
+                const unlockResult = redisLock.remove(source, owner);
+                unlockResult.then(result => {
+                    logger.info(`############ ${source} 释放锁详情 Start #############`);
+                    logger.info(result);
+                    logger.info(`############ ${source} 释放锁详情 End #############`);
+                })
             }
 
         })()
