@@ -32,7 +32,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "0.9.5",
     "redlock": "^4.1.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "spdy": "^4.0.2"
   },
   "dependencies": {
