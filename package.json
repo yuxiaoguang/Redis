@@ -27,7 +27,7 @@
     "element-theme-default": "^1.4.13",
     "express": "^4.17.1",
     "ioredis": "^4.16.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "0.9.5",
